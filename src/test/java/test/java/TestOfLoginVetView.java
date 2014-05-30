@@ -2,7 +2,10 @@
 package test.java;
  
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.*;
+
 import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,13 +20,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class TestOfLoginVetView {
      private WebDriver driver;
      private WebDriverWait wait;
-    
+     private String baseURL = "http://localhost:8080/VetView-0.9.2.5PreBuild";
     
       @Before
       public void setUp() {
         driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 10);
-        driver.get("http://www.google.com");
+        driver.get(baseURL + "/labs/home.zul");
       }
       @After
       public void tearDown() throws IOException {
@@ -31,27 +34,14 @@ public class TestOfLoginVetView {
       } 
  
       @Test
-      public void pageTitleAfterSearchShouldBeginWithDrupal() throws IOException {
-        WebElement searchField = driver.findElement(By.name("q"));
-        searchField.sendKeys("Drupal!");
-        searchField.submit();
-        assertTrue("The page title should start with the search string after the search.",
-            wait.until(new ExpectedCondition<Boolean>() {
-              public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().startsWith("drupal!");
-              }
-            }));
+      public void checkLogin() throws IOException 
+      {
+	    assertEquals("Login", driver.getTitle());
+	    //driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+	    //driver.get(baseUrl + "/Hosp/hospital/home.zul");
+	    //assertEquals("VetView", driver.getTitle());
       }
       
-      @Test
-      public void pageTitleAfterSearchShouldBeginWithDrupal2() throws IOException 
-      {
-        WebElement searchField = driver.findElement(By.name("q"));
-        searchField.sendKeys("Drupal!");
-        searchField.submit();
-        assertTrue("The page title should start with the search string after the search.",
-                driver.getTitle().toLowerCase().startsWith("2drupal!"));
-      }
             
       
     
